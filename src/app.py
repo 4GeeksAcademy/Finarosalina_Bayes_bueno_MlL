@@ -4,14 +4,6 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.model_selection import train_test_split
 import pandas as pd
 
-import xgboost as xgb
-from sklearn.ensemble import VotingClassifier, RandomForestClassifier
-from sklearn.model_selection import RandomizedSearchCV
-from sklearn.model_selection import GridSearchCV
-import nbformat
-
-
-
 url = "https://raw.githubusercontent.com/4GeeksAcademy/naive-bayes-project-tutorial/main/playstore_reviews.csv"
 df = pd.read_csv(url)
 
@@ -86,7 +78,7 @@ for model in results:
     print(f"Clasificación:\n{results[model]['Classification Report']}")
 
 
-
+from sklearn.ensemble import VotingClassifier, RandomForestClassifier
 
 rf = RandomForestClassifier(random_state=42)
 
@@ -109,7 +101,7 @@ print(f"Accuracy: {accuracy_score(y_train, y_pred_train_voting)}")
 print(f"Clasificación:\n{classification_report(y_train, y_pred_train_voting)}")
 
 
-
+from sklearn.model_selection import RandomizedSearchCV
 
 # 7. Optimización de MultinomialNB con RandomizedSearchCV
 param_dist = {
@@ -141,6 +133,11 @@ voting_clf_opt.fit(X_train_vec, y_train)
 with open("/workspaces/Finarosalina_Bayes_bueno_MlL/models/modelo_voting_classifier_opt.pkl", "wb") as f:
     pickle.dump(voting_clf_opt, f)
 
+import xgboost as xgb
+from sklearn.metrics import accuracy_score, classification_report
+from sklearn.model_selection import train_test_split
+from sklearn.feature_extraction.text import CountVectorizer
+import pandas as pd
 
 url = "https://raw.githubusercontent.com/4GeeksAcademy/naive-bayes-project-tutorial/main/playstore_reviews.csv"
 df = pd.read_csv(url)
@@ -178,6 +175,8 @@ print("\nResultados para XGBoost - Train:")
 print(f"Accuracy: {accuracy_score(y_train, y_pred_train_xgb)}")
 print(f"Clasificación:\n{classification_report(y_train, y_pred_train_xgb)}")
 
+from sklearn.model_selection import GridSearchCV
+import xgboost as xgb
 
 param_grid = {
     'n_estimators': [100, 200, 300],
@@ -211,6 +210,7 @@ print("\nResultados para XGBoost optimizado - Train:")
 print(f"Accuracy: {accuracy_score(y_train, y_pred_train_xgb)}")
 print(f"Clasificación:\n{classification_report(y_train, y_pred_train_xgb)}")
 
+import numpy as np
 
 # Guardar X_train_dense y X_test_dense como archivos CSV
 np.savetxt('/workspaces/Finarosalina_Bayes_bueno_MlL/data/processed/X_train.csv', X_train_dense, delimiter=',')
@@ -219,6 +219,7 @@ np.savetxt('/workspaces/Finarosalina_Bayes_bueno_MlL/data/processed/X_test.csv',
 np.savetxt('/workspaces/Finarosalina_Bayes_bueno_MlL/data/processed/y_train.csv', y_train, delimiter=',')
 np.savetxt('/workspaces/Finarosalina_Bayes_bueno_MlL/data/processed/y_test.csv', y_test, delimiter=',')
 
+import nbformat
 
 # Cargar el archivo .ipynb
 notebook_path = '/workspaces/Finarosalina_Bayes_bueno_MlL/src/explore.ipynb'
